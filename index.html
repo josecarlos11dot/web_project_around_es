@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alrededor de los EE.UU.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+   
+    <header class="header">
+      <h1 class="header__title">Alrededor de los EE.UU.</h1>
+    </header>
+
+    
+    <section class="profile">
+      <div class="profile__info">
+        <h2 class="profile__name">José Carlos</h2>
+        <p class="profile__description">Explorador urbano</p>
+        <button class="profile__edit-button">Editar perfil</button>
+      </div>
+      <button class="profile__add-button">+</button>
+    </section>
+
+    
+    <section class="gallery">
+      
+    </section>
+  </div>
+
+ 
+  <div class="popup popup_type_edit">
+    <div class="popup__container">
+      <button class="popup__close-button">&times;</button>
+      <h3 class="popup__title">Editar perfil</h3>
+      <form class="popup__form" name="editProfile">
+        <input type="text" class="popup__input" name="name" required />
+        <input type="text" class="popup__input" name="description" required />
+        <button class="popup__save-button">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
