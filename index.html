@@ -4,44 +4,117 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alrededor de los EE.UU.</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="index.css">
+
+
 </head>
 <body>
   <div class="page">
-   
-    <header class="header">
-      <h1 class="header__title">Alrededor de los EE.UU.</h1>
-    </header>
+    
+<header class="header">
+  <div class="header__container">
+    <h1 class="header__title">
+      <span class="header__main">Around</span>
+      <span class="header__subtitle">The U.S.</span>
+    </h1>
+  </div>
+</header>
+
+  <section class="profile">
+  <div class="profile__container">
+    
+    <div class="profile__avatar">
+      <img src="images/Avatar.png" alt="Jacques Cousteau" class="profile__image" />
+    </div>
 
     
-    <section class="profile">
-      <div class="profile__info">
-        <h2 class="profile__name">José Carlos</h2>
-        <p class="profile__description">Explorador urbano</p>
-        <button class="profile__edit-button">Editar perfil</button>
+    <div class="profile__info">
+      <div class="profile__header">
+        <h1 class="profile__name">Jacques Cousteau</h1>
+        <button class="profile__edit-name" type="button" aria-label="Editar perfil"></button>
       </div>
-      <button class="profile__add-button">+</button>
-    </section>
+      <p class="profile__profession">Explorador</p>
+    </div>
+
+    
+   <button class="profile__add-button" aria-label="Agregar nuevo contenido">+</button>
+
+  </div>
+</section>
 
     
     <section class="gallery">
-      
-    </section>
+  <ul class="gallery__list">
+
+    <li class="gallery__item">
+      <img src="images/yosemite.jpg" alt="Valle de Yosemite" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Valle de Yosemite</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+    <li class="gallery__item">
+      <img src="images/louise.jpg" alt="Lago Louise" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Lago Louise</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+    <li class="gallery__item">
+      <img src="images/montanas.jpg" alt="Montañas Calvas" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Montañas Calvas</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+    <li class="gallery__item">
+      <img src="images/latemar.jpg" alt="Latemar" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Latemar</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+    <li class="gallery__item">
+      <img src="images/vanois.jpg" alt="Vanois National Park" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Vanois National Park</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+    <li class="gallery__item">
+      <img src="images/braies.jpg" alt="Lago di Braies" class="gallery__image" />
+      <div class="gallery__footer">
+        <h2 class="gallery__title">Lago di Braies</h2>
+        <button class="gallery__like-button" aria-label="Guardar en favoritos"></button>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+
+    
+   <footer class="footer">
+    <p class="footer__text">© 2024 Around The U.S.</p>
+  </footer>
   </div>
 
- 
-  <div class="popup popup_type_edit">
-    <div class="popup__container">
-      <button class="popup__close-button">&times;</button>
-      <h3 class="popup__title">Editar perfil</h3>
-      <form class="popup__form" name="editProfile">
-        <input type="text" class="popup__input" name="name" required />
-        <input type="text" class="popup__input" name="description" required />
-        <button class="popup__save-button">Guardar</button>
-      </form>
-    </div>
+<div class="popup">
+  <div class="popup__container">
+    <h2 class="popup__title">Editar perfil</h2>
+    <input type="text" class="popup__input" placeholder="Nombre">
+    <input type="text" class="popup__input" placeholder="Acerca de mí">
+    <button class="popup__button" disabled>Guardar</button>
+    <button class="popup__close" aria-label="Cerrar"></button>
   </div>
+</div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
