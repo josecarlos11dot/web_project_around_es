@@ -56,7 +56,14 @@
   border: none;
   cursor: pointer;
 }
+.gallery__like-button:hover {
+  background-image: url('../images/like-hover.svg');
+}
 
+
+.gallery__like-button_active {
+  background-image: url('../images/like-active.svg');
+}
 
 @media (max-width: 1279px) {
   .gallery__list {
