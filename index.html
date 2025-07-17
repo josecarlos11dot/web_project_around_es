@@ -31,7 +31,7 @@
     <div class="profile__info">
       <div class="profile__header">
         <h1 class="profile__name">Jacques Cousteau</h1>
-        <button class="profile__edit-name" type="button" aria-label="Editar perfil"></button>
+        <button class="profile__edit-button" type="button" aria-label="Editar perfil"></button>
       </div>
       <p class="profile__profession">Explorador</p>
     </div>
@@ -97,20 +97,20 @@
   </ul>
 </section>
 
-
-    
    <footer class="footer">
     <p class="footer__text">© 2024 Around The U.S.</p>
   </footer>
   </div>
 
-<div class="popup">
+<div class="popup popup_type_edit">
   <div class="popup__container">
+    <button class="popup__close" type="button" aria-label="Cerrar"></button>
     <h2 class="popup__title">Editar perfil</h2>
-    <input type="text" class="popup__input" placeholder="Nombre">
-    <input type="text" class="popup__input" placeholder="Acerca de mí">
-    <button class="popup__button" disabled>Guardar</button>
-    <button class="popup__close" aria-label="Cerrar"></button>
+    <form class="popup__form" name="edit-form" novalidate>
+      <input type="text" class="popup__input" name="name" placeholder="Nombre" required minlength="2" maxlength="40" />
+      <input type="text" class="popup__input" name="description" placeholder="Acerca de mí" required minlength="2" maxlength="200" />
+      <button class="popup__button" type="submit" disabled>Guardar</button>
+    </form>
   </div>
 </div>
 
