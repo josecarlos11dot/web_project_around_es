@@ -34,13 +34,22 @@ descriptionInput.addEventListener('input', toggleSubmitButton);
 editForm.addEventListener('reset', () => {
   submitButton.disabled = true;
 });
+const profileTitle = document.querySelector('.profile__name');       
+const profileDescription = document.querySelector('.profile__profession'); 
 
+
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = descriptionInput.value;
+
+  popup.classList.remove('popup_opened'); // cerrar popup después de guardar
+});
 
 window.addEventListener('DOMContentLoaded', toggleSubmitButton);
 
-
 const botonesLike = document.querySelectorAll('.gallery__like-button');
-
 botonesLike.forEach((boton) => {
   boton.addEventListener('click', () => {
     boton.classList.toggle('gallery__like-button_active');
