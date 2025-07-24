@@ -10,11 +10,15 @@
   line-height: 22px;
   color: #545454;
 }
-@media screen and (max-width: 767px) {
-  .footer__text {
-    font-size: 14px;
-    line-height: 17px;
-    max-width: 282px;
-    text-align: left;
+@media (max-width: 1279px) {
+  .footer {
+    padding: 8.72% 0 7.81%;
   }
-   }
+}
+
+@media (max-width: 767px) {
+  .footer {
+     max-width: 90%;
+    padding: 20% 5% 19%;
+  }
+}
