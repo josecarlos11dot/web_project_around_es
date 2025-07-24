@@ -42,9 +42,8 @@
 
 @media (max-width: 1279px) {
   .header {
-    width: 100%;
+    width: 90%;
     padding: 6% 0 5%;
-    max-width: 90%;
     margin: 0 auto;
   }
 }
@@ -54,7 +53,7 @@
 @media (max-width: 767px) {
   .header {
     padding: 14% 0 12%;
-    max-width: 88%;
+    width: 88%;
     margin: 0 auto;
   }
 .header__container {
