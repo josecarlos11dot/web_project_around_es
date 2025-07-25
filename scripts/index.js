@@ -19,10 +19,11 @@ const editForm = document.forms['edit-form'];
 const nameInput = editForm.elements['name'];
 const descriptionInput = editForm.elements['description'];
 const submitButton = editForm.querySelector('.popup__button');
+const MIN_INPUT_LENGTH = 2;
 
 function toggleSubmitButton() {
-  const isNameValid = nameInput.value.trim().length >= 2 && nameInput.validity.valid;
-  const isDescriptionValid = descriptionInput.value.trim().length >= 2 && descriptionInput.validity.valid;
+  const isNameValid = nameInput.value.trim().length >= MIN_INPUT_LENGTH && nameInput.validity.valid;
+  const isDescriptionValid = descriptionInput.value.trim().length >= MIN_INPUT_LENGTH  && descriptionInput.validity.valid;
 
   submitButton.disabled = !(isNameValid && isDescriptionValid);
 }
@@ -44,7 +45,7 @@ editForm.addEventListener('submit', (e) => {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
 
-  popup.classList.remove('popup_opened'); // cerrar popup después de guardar
+  popup.classList.remove('popup_opened'); 
 });
 
 window.addEventListener('DOMContentLoaded', toggleSubmitButton);
