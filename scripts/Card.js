@@ -1,0 +1,59 @@
+export class Card {
+    constructor(name, link, templateSelector, handleImageClick) {
+        this._name = name;
+        this._link = link;
+        this._templateSelector = templateSelector;
+        this._handleImageClick = handleImageClick;
+    }
+
+
+    _getTemplate() {
+    const cardElement = document 
+    .querySelector(this._templateSelector)
+    .content
+    .querySelector(".gallery__item")
+    .cloneNode(true);
+
+    return cardElement;
+    }
+
+    _handleLike() {
+    this._likeButton.classList.toggle("gallery__like-button_active");
+    }
+
+    _handleDelete() {
+    this._element.remove();
+    this._element = null;
+    }
+
+    _setEventListeners() {
+    this._likeButton.addEventListener("click", () => {
+        this._handleLike();
+    });
+
+    this._deleteButton.addEventListener("click", () => {
+        this._handleDelete();
+    });
+
+    this._image.addEventListener("click", () => {
+        this._handleImageClick(this._name, this._link);
+    });
+    }
+
+    generateCard() {
+    this._element = this._getTemplate();
+
+    this._image = this._element.querySelector(".gallery__image");
+    this._likeButton = this._element.querySelector(".gallery__like-button");
+    this._deleteButton = this._element.querySelector(".gallery__delete-button");
+
+    this._image.src = this._link;
+    this._image.alt = this._name;
+    this._element.querySelector(".gallery__title").textContent = this._name;
+
+    this._setEventListeners();
+
+    return this._element;
+    }
+
+}

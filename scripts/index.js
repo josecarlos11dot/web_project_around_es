@@ -1,4 +1,5 @@
-import { enableValidation } from "./validate.js";
+import { Card } from "./Card.js";
+import { enableValidation } from "./FormValidator.js";
 
 const editButton = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup_type_edit');
@@ -104,49 +105,16 @@ const imagePopupClose = imagePopup.querySelector(".popup__close");
 
 
 
-function createCard(title, link) {
-  const card = document.createElement("li");
-  card.classList.add("gallery__item");
+function createCardElement(data) {
+  const card = new Card(
+    data.name, 
+    data.link, 
+    "#card-template",
+    openImagePopup
+  );
+  return card.generateCard();
+}
 
-const image = document.createElement("img");
-image.classList.add("gallery__image");
-image.src = link;
-image.alt = title;
-
-image.addEventListener("click", () => {
-  openImagePopup(title, link);
-});
-
-
-
-const footer = document.createElement("div");
-footer.classList.add("gallery__footer");
-
-
-const cardTitle = document.createElement("h2");
-cardTitle.classList.add("gallery__title");
-cardTitle.textContent = title;
-
-
-const likeButton = document.createElement("button");
-likeButton.classList.add("gallery__like-button");
-
-likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("gallery__like-button_active");
-  });
-
-const deleteButton = document.createElement("button");
-  deleteButton.classList.add("gallery__delete-button");
-
-  deleteButton.addEventListener("click", () => {
-    card.remove();
-  }); 
-
-footer.append(cardTitle, likeButton);
-card.append(image, footer,deleteButton);
-
-return card;
- }
 
 addButton.addEventListener('click', () => {
   addPopup.classList.add('popup_opened');
@@ -161,8 +129,12 @@ addPopup.querySelector('.popup__close').addEventListener('click', () => {
 addForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  const card = createCard(titleInput.value, linkInput.value);
-  galleryList.prepend(card);
+  const cardElement = createCardElement({
+    name: titleInput.value,
+    link: linkInput.value
+  });
+
+  galleryList.prepend(cardElement);
 
   closePopup(addPopup);
 });
@@ -190,7 +162,8 @@ document.addEventListener('keydown', handleEscClose);
 
 
 initialCards.forEach((item) => {
-  const card = createCard(item.name, item.link);
-  galleryList.append(card);
+  const cardElement = createCardElement(item);
+  galleryList.append(cardElement);
 });
+
 enableValidation();
