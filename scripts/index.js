@@ -121,11 +121,13 @@ addFormValidator.enableValidation();
 editButton.addEventListener('click', () => {
  nameInput.value = profileTitle.textContent;
  jobInput.value = profileDescription.textContent;
- 
+
+editFormValidator.resetValidation();
  popup.classList.add('popup_opened');
 });
 
 addButton.addEventListener('click', () => {
+  addFormValidator.resetValidation();
   addPopup.classList.add('popup_opened');
   
 });
@@ -136,6 +138,8 @@ closeButton.addEventListener('click', () => {
 
 addPopup.querySelector('.popup__close').addEventListener('click', () => {
   closePopup(addPopup);
+
+ 
 });
 
 imagePopupClose.addEventListener("click", () => {
