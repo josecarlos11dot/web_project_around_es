@@ -1,11 +1,10 @@
 export default class Card {
-    constructor(name, link, templateSelector, handleImageClick) {
-        this._name = name;
-        this._link = link;
-        this._templateSelector = templateSelector;
-        this._handleImageClick = handleImageClick;
-    }
-
+   constructor(data, templateSelector, handleImageClick) {
+    this._name = data.name;
+    this._link = data.link;
+    this._templateSelector = templateSelector;
+    this._handleImageClick = handleImageClick;
+}
 
     _getTemplate() {
     const cardElement = document 

@@ -1,16 +1,18 @@
 
 // imports 
 import Section from "./components/Section.js";
-import Popup from "./components/Popup.js";
 import Card from "./components/Card.js"
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js";
-import Userinfo from "./components/UserInfo.js";
+import UserInfo from "./components/UserInfo.js";
 import { FormValidator } from "./FormValidator.js";
 // config
 const validationConfig = {
-  inputSelector: ".popup__input", 
+  inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible"
 };
 
 
@@ -71,15 +73,14 @@ const initialCards = [
 // functions
 
 
-function openImagePopup(name, link) {
+function openImagePopup({name, link }) {
   imagePopup.open({ name, link});
 }
 
 
 function createCardElement(data) {
   const card = new Card(
-    data.name, 
-    data.link, 
+   data,
     "#card-template",
     openImagePopup
   );
@@ -105,7 +106,7 @@ const cardList = new Section(
 );
 
 
-const userInfo = new Userinfo({
+const userInfo = new UserInfo({
   nameSelector: ".profile__name",
   jobSelector: ".profile__profession"
 });
@@ -116,6 +117,7 @@ const editPopup = new PopupWithForm(".popup_type_edit", (formData) => {
     name: formData.name,
     job: formData.description
   });
+  
 });
 
 editPopup.setEventListeners();
@@ -126,6 +128,7 @@ const addCardPopup = new PopupWithForm(".popup_type_add", (formData) => {
     link: formData.link
   });
   cardList.addItem(cardElement);
+  
 });
 
 addCardPopup.setEventListeners();
