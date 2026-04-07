@@ -1,11 +1,14 @@
 
 // imports 
+import Api from "./components/Api.js";
 import Section from "./components/Section.js";
 import Card from "./components/Card.js"
 import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js";
 import UserInfo from "./components/UserInfo.js";
 import { FormValidator } from "./FormValidator.js";
+
+
 // config
 const validationConfig = {
   inputSelector: ".popup__input",
@@ -14,6 +17,14 @@ const validationConfig = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible"
 };
+
+const api = new Api({
+  baseUrl: "https://around-api.es.tripleten-services.com/v1", 
+  headers: {
+    authorization: "448aba72-e72b-4e67-9da0-75036667b20c",
+    "content-type": "application/json"
+  }
+});
 
 
 // selectors
@@ -42,33 +53,6 @@ imagePopup.setEventListeners();
 
 
 
-// initialcards
-const initialCards = [
-  {
-    name: "Valle de Yosemite",
-    link: "./images/yosemite.jpg"
-  },
-  {
-    name: "Lago Louise",
-    link: "./images/louise.jpg"
-  },
-  {
-    name: "Montañas Calvas",
-    link: "./images/montanas.jpg"
-  },
-  {
-    name: "Latemar",
-    link: "./images/latemar.jpg"
-  },
-  {
-    name: "Vanois National Park",
-    link: "./images/vanois.jpg"
-  },
-  {
-    name: "Lago di Braies",
-    link: "./images/braies.jpg"
-  }
-];
 
 // functions
 
@@ -96,7 +80,6 @@ addFormValidator.enableValidation();
 
 const cardList = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       const cardElement = createCardElement(item);
       cardList.addItem(cardElement);
@@ -163,5 +146,16 @@ addButton.addEventListener('click', () => {
 
 
 // initial render
-cardList.renderItems();
 
+
+// tester
+api.getUserInfo()
+  .then(data => console.log("USER:", data))
+  .catch(err => console.log("ERROR USER:", err));
+
+api.getInitialCards()
+  .then(cards => {
+    console.log(cards);
+    cardList.renderItems(cards);
+  })
+  .catch(err => console.log(err));

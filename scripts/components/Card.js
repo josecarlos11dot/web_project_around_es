@@ -1,37 +1,65 @@
 export default class Card {
-   constructor(data, templateSelector, handleImageClick) {
+   constructor(data, templateSelector, handleImageClick, userId, handleLikeClick, handleDeleteClick) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
+    this._likes = data.likes;
+    this._ownerId = data.owner._id;
+
+    this._userId = userId;
+
+
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
+
+    this._handleLikeClick = handleLikeClick;
+    this._handleDeleteClick = handleDeleteClick;
 }
 
     _getTemplate() {
-    const cardElement = document 
-    .querySelector(this._templateSelector)
-    .content
-    .querySelector(".gallery__item")
-    .cloneNode(true);
+   return document 
+   .querySelector(this._templateSelector)
+   .content
+   .querySelector(".gallery__item")
+   .cloneNode(true); 
 
-    return cardElement;
+   }
+
+    _isOwner() {
+        return this._ownerId === this._userId;
     }
 
-    _handleLike() {
-    this._likeButton.classList.toggle("gallery__like-button_active");
+    _isLiked() {
+    return this._likes.some(user => user._id === this._userId);
     }
 
-    _handleDelete() {
+    _updateLikesView() {
+        this._likeButton.textContent = this._likes.length;
+
+        if(this._isLiked()) {
+            this._likeButton.classList.add("gallery__like-button_active");
+        } else {
+            this._likeButton.classList.remove("gallery__like-button_active")
+        }
+    }
+
+    updateLikes(newLikes) {
+    this._likes = newLikes;
+    this._updateLikesView();
+    }
+
+    removeCard() {
     this._element.remove();
     this._element = null;
     }
 
     _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
-        this._handleLike();
+        this._handleLikeClick(this);
     });
 
     this._deleteButton.addEventListener("click", () => {
-        this._handleDelete();
+        this._handleDeleteClick(this);
     });
 
     this._image.addEventListener("click", () => {
@@ -53,9 +81,14 @@ export default class Card {
     this._image.alt = this._name;
     this._element.querySelector(".gallery__title").textContent = this._name;
 
-    this._setEventListeners();
-
-    return this._element;
+    if (!this._isOwner()) {
+        this._deleteButton.remove();
     }
 
-}
+    this._setEventListeners();
+    this._updateLikesView();
+
+    return this._element;
+
+    }
+ }
