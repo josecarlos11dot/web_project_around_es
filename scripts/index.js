@@ -7,6 +7,7 @@ import PopupWithImage from "./components/PopupWithImage.js";
 import PopupWithForm from "./components/PopupWithForm.js";
 import UserInfo from "./components/UserInfo.js";
 import { FormValidator } from "./FormValidator.js";
+import PopupWithConfirmation from "./components/PopupWithConfirmation.js";
 
 
 // config
@@ -61,15 +62,48 @@ function openImagePopup({name, link }) {
   imagePopup.open({ name, link});
 }
 
-
 function createCardElement(data) {
   const card = new Card(
    data,
     "#card-template",
-    openImagePopup
+    openImagePopup,
+    userId,
+    handleLikeClick,
+    handleDeleteClick
   );
+
   return card.generateCard();
 }
+
+function handleLikeClick(card) {
+  if (!card._isLiked()) {
+    api.addLike(card._id)
+    .then((res) => {
+      card.updateLikes(res.isLiked);
+    })
+    .catch((err) => console.log(err));
+  } else{
+    api.removeLike(card._id)
+    .then((res) => {
+      card.updateLikes(res.isLiked);
+    })
+    .catch(err => console.log(err));
+  }
+}
+
+function handleDeleteClick(card) {
+  deletePopup.setSubmitAction(() => {
+    api.deleteCard(card._id) 
+    .then(() => {
+      card.removeCard();
+      deletePopup.close();
+    })
+    .catch(err => console.log(err));
+  });
+  deletePopup.open();
+}
+
+
 
 // instances
 const editFormValidator = new FormValidator(validationConfig, editForm);
@@ -96,26 +130,49 @@ const userInfo = new UserInfo({
 
 
 const editPopup = new PopupWithForm(".popup_type_edit", (formData) => {
-  userInfo.setUserInfo({
+
+  editPopup.renderLoading(true);
+
+  api.updateUserInfo({
     name: formData.name,
-    job: formData.description
+    about: formData.description
+  })
+  .then((data) => {
+    userInfo.setUserInfo({
+      name: data.name,
+      job: data.about
+    });
+    editPopup.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    editPopup.renderLoading(false);
   });
-  
 });
 
 editPopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm(".popup_type_add", (formData) => {
-  const cardElement = createCardElement({
+  api.addCard({
     name: formData.title,
     link: formData.link
-  });
-  cardList.addItem(cardElement);
-  
-});
+  })
+  .then((newCard) => {
+    console.log("NEW CARD:", newCard);
+
+    const cardElement = createCardElement(newCard);
+    cardList.addItem(cardElement);
+  })
+  .catch(err => console.log(err));
+})
 
 addCardPopup.setEventListeners();
 
+
+const deletePopup = new PopupWithConfirmation(".popup_type_confirm");
+deletePopup.setEventListeners();
 
 
 
@@ -149,13 +206,19 @@ addButton.addEventListener('click', () => {
 
 
 // tester
-api.getUserInfo()
-  .then(data => console.log("USER:", data))
-  .catch(err => console.log("ERROR USER:", err));
 
-api.getInitialCards()
-  .then(cards => {
-    console.log(cards);
+let userId;
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userId = userData._id;
+
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about
+    });
+
     cardList.renderItems(cards);
   })
+
   .catch(err => console.log(err));

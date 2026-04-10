@@ -3,8 +3,10 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
-    this._likes = data.likes;
-    this._ownerId = data.owner._id;
+    this._likes = data.likes || [];
+    this._ownerId = data.owner._id || data.owner;
+    
+    this._isLikedFromApi = data.isLiked;
 
     this._userId = userId;
 
@@ -30,12 +32,10 @@ export default class Card {
     }
 
     _isLiked() {
-    return this._likes.some(user => user._id === this._userId);
+    return this._isLikedFromApi;
     }
 
     _updateLikesView() {
-        this._likeButton.textContent = this._likes.length;
-
         if(this._isLiked()) {
             this._likeButton.classList.add("gallery__like-button_active");
         } else {
@@ -43,8 +43,8 @@ export default class Card {
         }
     }
 
-    updateLikes(newLikes) {
-    this._likes = newLikes;
+    updateLikes(isLiked) {
+    this._isLikedFromApi = isLiked;
     this._updateLikesView();
     }
 
