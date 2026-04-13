@@ -4,9 +4,9 @@ export default class Card {
     this._link = data.link;
     this._id = data._id;
     this._likes = data.likes || [];
+    
     this._ownerId = data.owner._id || data.owner;
     
-    this._isLikedFromApi = data.isLiked;
 
     this._userId = userId;
 
@@ -31,21 +31,26 @@ export default class Card {
         return this._ownerId === this._userId;
     }
 
-    _isLiked() {
-    return this._isLikedFromApi;
+    isLiked() {
+    return (this._likes || []).some(user => user._id === this._userId);
     }
 
     _updateLikesView() {
-        if(this._isLiked()) {
+        if(this.isLiked()) {
             this._likeButton.classList.add("gallery__like-button_active");
         } else {
-            this._likeButton.classList.remove("gallery__like-button_active")
+            this._likeButton.classList.remove("gallery__like-button_active");
         }
     }
 
-    updateLikes(isLiked) {
-    this._isLikedFromApi = isLiked;
-    this._updateLikesView();
+    updateLikes(likes) {
+        this._likes = likes || [];
+        this._likeCounter.textContent = this._likes.length;
+        this._updateLikesView();
+    }
+
+    getId() {
+        return this._id;
     }
 
     removeCard() {
@@ -58,9 +63,11 @@ export default class Card {
         this._handleLikeClick(this);
     });
 
-    this._deleteButton.addEventListener("click", () => {
-        this._handleDeleteClick(this);
-    });
+    if (this._isOwner()) {
+        this._deleteButton.addEventListener("click", () => {
+            this._handleDeleteClick(this);
+        });
+    }
 
     this._image.addEventListener("click", () => {
         this._handleImageClick( {
@@ -77,18 +84,25 @@ export default class Card {
     this._likeButton = this._element.querySelector(".gallery__like-button");
     this._deleteButton = this._element.querySelector(".gallery__delete-button");
 
+    this._likeCounter = this._element.querySelector(".gallery__like-count");
+    this._likeCounter.textContent = this._likes.length;
+
     this._image.src = this._link;
     this._image.alt = this._name;
     this._element.querySelector(".gallery__title").textContent = this._name;
 
+    
     if (!this._isOwner()) {
         this._deleteButton.remove();
     }
-
-    this._setEventListeners();
+    
     this._updateLikesView();
+    this._setEventListeners();
+    
 
     return this._element;
 
     }
+
+    
  }
